@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="b04e96ff-190f-40b6-abe0-7e44e1eb8afe" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/ai_hw1.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/framework/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/framework/consts.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/framework/db/moderate_MDA.in" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/framework/db/small_MDA.in" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/framework/db/tlv_streets_map.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/framework/graph_search/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/framework/graph_search/anytime_astar.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/framework/graph_search/astar.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/framework/graph_search/astar_epsilon.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/framework/graph_search/best_first_search.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/framework/graph_search/graph_problem_interface.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/framework/graph_search/uniform_cost.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/framework/graph_search/utils/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/framework/graph_search/utils/heapdict.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/framework/graph_search/utils/timer.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/framework/graph_search/utils/utils.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/framework/serializable.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/framework/ways/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/framework/ways/streets_map.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/problems/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/problems/cached_air_distance_calculator.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/problems/cached_map_distance_finder.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/problems/map_heuristics.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/problems/map_problem.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/problems/mda_heuristics.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/problems/mda_problem.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/problems/mda_problem_input.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1kWBWOqCT7241CKMRy6Ilmw3VEf" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b04e96ff-190f-40b6-abe0-7e44e1eb8afe" name="Default Changelist" comment="" />
+      <created>1605806497930</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1605806497930</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="461" y="162" key="SettingsEditor" timestamp="1605806800899">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="461" y="162" key="SettingsEditor/1920.723.1366.728/0.0.1920.1040@0.0.1920.1040" timestamp="1605806800899" />
+    <state x="656" y="257" width="804" height="526" key="find.popup" timestamp="1605866596248">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="656" y="257" width="804" height="526" key="find.popup/1920.723.1366.728/0.0.1920.1040@0.0.1920.1040" timestamp="1605866596248" />
+  </component>
+</project>
