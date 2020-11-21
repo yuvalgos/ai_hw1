@@ -8,7 +8,6 @@ from .map_heuristics import AirDistHeuristic
 from .cached_map_distance_finder import CachedMapDistanceFinder
 from .mda_problem_input import *
 
-
 __all__ = ['MDAState', 'MDACost', 'MDAProblem', 'MDAOptimizationObjective']
 
 
@@ -79,7 +78,11 @@ class MDAState(GraphProblemState):
         #   (using equals `==` operator) because the class `Junction` explicitly
         #   implements the `__eq__()` method. The types `frozenset`, `ApartmentWithSymptomsReport`, `Laboratory`
         #   are also comparable (in the same manner).
-        raise NotImplementedError  # TODO: remove this line.
+        return self.current_location == other.current_location \
+               and self.tests_on_ambulance == other.tests_on_ambulance \
+               and self.tests_transferred_to_lab == other.tests_transferred_to_lab \
+               and self.nr_matoshim_on_ambulance == other.nr_matoshim_on_ambulance \
+               and self.visited_labs == other.visited_labs
 
     def __hash__(self):
         """
@@ -98,9 +101,8 @@ class MDAState(GraphProblemState):
          Notice that this method can be implemented using a single line of code - do so!
          Use python's built-it `sum()` function.
          Notice that `sum()` can receive an *ITERATOR* as argument; That is, you can simply write something like this:
-        >>> sum(<some expression using item> for item in some_collection_of_items)
         """
-        raise NotImplementedError  # TODO: remove this line.
+        return sum(apartment.nr_roomates for apartment in self.tests_on_ambulance)
 
 
 class MDAOptimizationObjective(Enum):
