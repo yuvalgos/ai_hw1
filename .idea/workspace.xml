@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b04e96ff-190f-40b6-abe0-7e44e1eb8afe" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/problems/cached_map_distance_finder.py" beforeDir="false" afterPath="$PROJECT_DIR$/problems/cached_map_distance_finder.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/problems/mda_problem.py" beforeDir="false" afterPath="$PROJECT_DIR$/problems/mda_problem.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -24,6 +24,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="ignore_missing_gitignore" value="true" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="ServiceViewManager">
@@ -56,13 +57,13 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="162" key="SettingsEditor/1920.723.1366.728/0.0.1920.1040@0.0.1920.1040" timestamp="1605806800899" />
-    <state x="184" y="343" key="com.intellij.ide.util.TipDialog" timestamp="1605962852557">
+    <state x="184" y="343" key="com.intellij.ide.util.TipDialog" timestamp="1606062886246">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="184" y="343" key="com.intellij.ide.util.TipDialog/1920.723.1366.728/0.0.1920.1040@0.0.1920.1040" timestamp="1605962852557" />
-    <state x="656" y="257" width="804" height="526" key="find.popup" timestamp="1605866596248">
+    <state x="184" y="343" key="com.intellij.ide.util.TipDialog/1920.723.1366.728/0.0.1920.1040@0.0.1920.1040" timestamp="1606062886246" />
+    <state x="56" y="373" width="804" height="526" key="find.popup" timestamp="1606063714659">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="656" y="257" width="804" height="526" key="find.popup/1920.723.1366.728/0.0.1920.1040@0.0.1920.1040" timestamp="1605866596248" />
+    <state x="56" y="373" width="804" height="526" key="find.popup/1920.723.1366.728/0.0.1920.1040@0.0.1920.1040" timestamp="1606063714659" />
   </component>
 </project>

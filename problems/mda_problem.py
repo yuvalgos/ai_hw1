@@ -213,9 +213,61 @@ class MDAProblem(GraphProblem):
             - Other fields of the state and the problem input.
             - Python's sets union operation (`some_set_or_frozenset | some_other_set_or_frozenset`).
         """
-        state_to_expand.
         assert isinstance(state_to_expand, MDAState)
 
+        labs = set()
+        # check which labs can visit:
+        if state_to_expand.get_total_nr_tests_taken_and_stored_on_ambulance() is not 0:
+            operators_set = labs | set(self.problem_input.laboratories)
+        else:
+            operators_set = labs | (set(self.problem_input.laboratories) - state_to_expand.visited_labs)
+
+        # check which apartments can visit:
+        apartments = set(self.get_reported_apartments_waiting_to_visit(state_to_expand))
+        for a in apartments:
+            if a.nr_roommates > state_to_expand.nr_matoshim_on_ambulance:
+                apartments.remove(a)
+            if a.nr_roommates > self.problem_input.ambulance.total_fridges_capacity \
+                    - state_to_expand.get_total_nr_tests_taken_and_stored_on_ambulance():
+                apartments.remove(a)
+
+        # yield all lab operators:
+        for apart in apartments:
+            next_state_matoshim = state_to_expand.nr_matoshim_on_ambulance - apart.nr_roommates
+            next_state_tests_transferred = state_to_expand.tests_transferred_to_lab
+            next_state_visited_labs = state_to_expand.visited_labs
+            next_state_tests_on_ambulance = set(state_to_expand.tests_on_ambulance)
+            next_state_tests_on_ambulance.add(apart)
+
+            apart_state = MDAState(current_site=apart,
+                                   tests_on_ambulance=frozenset(next_state_tests_on_ambulance),
+                                   tests_transferred_to_lab=frozenset(next_state_tests_transferred),
+                                   nr_matoshim_on_ambulance=next_state_matoshim,
+                                   visited_labs=frozenset(next_state_visited_labs)
+                                   )
+            name = "visit " + apart.reporter_name
+            cost = self.get_operator_cost(state_to_expand, apart_state)
+            yield OperatorResult(apart_state, cost, name)
+
+        # yield all lab operators:
+        for lab in labs:
+            next_state_matoshim = state_to_expand.nr_matoshim_on_ambulance
+            if lab not in state_to_expand.visited_labs:
+                next_state_matoshim += lab.max_nr_matoshim
+            next_state_tests_transferred = \
+                state_to_expand.tests_transferred_to_lab | state_to_expand.tests_on_ambulance
+            next_state_visited_labs = set(state_to_expand.visited_labs)
+            next_state_visited_labs.add(lab)
+
+            lab_state = MDAState(current_site=lab,
+                                 tests_on_ambulance=frozenset(),
+                                 tests_transferred_to_lab=frozenset(next_state_tests_transferred),
+                                 nr_matoshim_on_ambulance=next_state_matoshim,
+                                 visited_labs=frozenset(next_state_visited_labs)
+                                 )
+            name = "go to lab " + lab.name
+            cost = self.get_operator_cost(state_to_expand, lab_state)
+            yield OperatorResult(lab_state, cost, name)
 
     def get_operator_cost(self, prev_state: MDAState, succ_state: MDAState) -> MDACost:
         """
@@ -250,18 +302,27 @@ class MDAProblem(GraphProblem):
         distance_cost = \
             self.map_distance_finder.get_map_cost_between(prev_state, succ_state)
 
+        active_fridges = math.ceil(prev_state.get_total_nr_tests_taken_and_stored_on_ambulance() / \
+                                   self.problem_input.ambulance.fridge_capacity)
+        fridges_gas_consumption = self.problem_input.ambulance.fridges_gas_consumption_liter_per_meter \
+                                  * active_fridges
         monetary_cost = \
             self.problem_input.gas_liter_price \
             * (self.problem_input.ambulance.drive_gas_consumption_liter_per_meter +
-               self.problem_input.ambulance.fridges_gas_consumption_liter_per_meter) \
+               fridges_gas_consumption) \
             * distance_cost
         if isinstance(succ_state.current_site, Laboratory):
-            if not prev_state.get_total_nr_tests_taken_and_stored_on_ambulance() ==  0:
+            if not prev_state.get_total_nr_tests_taken_and_stored_on_ambulance() == 0:
                 monetary_cost += succ_state.current_site.tests_transfer_cost
             if succ_state.current_site in prev_state.visited_labs:
                 monetary_cost += succ_state.current_site.revisit_extra_cost
 
-        return MDACost(...)
+        test_travel_cost = prev_state.get_total_nr_tests_taken_and_stored_on_ambulance() \
+                           * distance_cost
+
+        return MDACost(distance_cost=distance_cost,
+                       monetary_cost=monetary_cost,
+                       test_travel_cost=test_travel_cost)
 
     def is_goal(self, state: GraphProblemState) -> bool:
         """
@@ -271,7 +332,16 @@ class MDAProblem(GraphProblem):
          In order to create a set from some other collection (list/tuple) you can just `set(some_other_collection)`.
         """
         assert isinstance(state, MDAState)
-        raise NotImplementedError  # TODO: remove the line!
+
+        is_goal = True
+        if not isinstance(state.current_site, Laboratory):
+            is_goal = False
+        if not state.get_total_nr_tests_taken_and_stored_on_ambulance() == 0:
+            is_goal = False
+        if not state.tests_transferred_to_lab == self.problem_input.reported_apartments:
+            is_goal = False
+
+        return is_goal
 
     def get_zero_cost(self) -> Cost:
         """
@@ -298,13 +368,12 @@ class MDAProblem(GraphProblem):
                 generated set.
             Note: This method can be implemented using a single line of code. Try to do so.
         """
-        waiting_apartments = set(self.problem_input.reported_apartments)\
-        - state.tests_transferred_to_lab\
-        - state.tests_on_ambulance
-
-        waiting_apartments_list = list(waiting_apartments).sort(key=lambda x: x.report_id)
+        waiting_apartments = set(self.problem_input.reported_apartments) \
+                             - state.tests_transferred_to_lab \
+                             - state.tests_on_ambulance
+        waiting_apartments_list = list(waiting_apartments)
+        waiting_apartments_list.sort(key=lambda x: x.report_id)
         return waiting_apartments_list
-
 
     def get_all_certain_junctions_in_remaining_ambulance_path(self, state: MDAState) -> List[Junction]:
         """
