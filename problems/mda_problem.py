@@ -102,7 +102,7 @@ class MDAState(GraphProblemState):
          Use python's built-it `sum()` function.
          Notice that `sum()` can receive an *ITERATOR* as argument; That is, you can simply write something like this:
         """
-        return sum(apartment.nr_roomates for apartment in self.tests_on_ambulance)
+        return sum(apartment.nr_roommates for apartment in self.tests_on_ambulance)
 
 
 class MDAOptimizationObjective(Enum):
@@ -218,18 +218,19 @@ class MDAProblem(GraphProblem):
         labs = set()
         # check which labs can visit:
         if state_to_expand.get_total_nr_tests_taken_and_stored_on_ambulance() is not 0:
-            operators_set = labs | set(self.problem_input.laboratories)
+            labs = set(self.problem_input.laboratories)
         else:
-            operators_set = labs | (set(self.problem_input.laboratories) - state_to_expand.visited_labs)
+            labs = (set(self.problem_input.laboratories) - state_to_expand.visited_labs)
 
         # check which apartments can visit:
-        apartments = set(self.get_reported_apartments_waiting_to_visit(state_to_expand))
+        apartments = self.get_reported_apartments_waiting_to_visit(state_to_expand)
         for a in apartments:
             if a.nr_roommates > state_to_expand.nr_matoshim_on_ambulance:
                 apartments.remove(a)
             if a.nr_roommates > self.problem_input.ambulance.total_fridges_capacity \
                     - state_to_expand.get_total_nr_tests_taken_and_stored_on_ambulance():
                 apartments.remove(a)
+        apartments = set(apartments)
 
         # yield all lab operators:
         for apart in apartments:
@@ -300,12 +301,14 @@ class MDAProblem(GraphProblem):
             You might find this tip useful for summing a slice of a collection.
         """
         distance_cost = \
-            self.map_distance_finder.get_map_cost_between(prev_state, succ_state)
+            self.map_distance_finder.get_map_cost_between(prev_state.current_location, succ_state.current_location)
 
         active_fridges = math.ceil(prev_state.get_total_nr_tests_taken_and_stored_on_ambulance() / \
                                    self.problem_input.ambulance.fridge_capacity)
-        fridges_gas_consumption = self.problem_input.ambulance.fridges_gas_consumption_liter_per_meter \
-                                  * active_fridges
+        fridges_gas_consumption = 0
+        if active_fridges > 0:
+            for i in range(0, active_fridges + 1):
+                fridges_gas_consumption += self.problem_input.ambulance.fridges_gas_consumption_liter_per_meter[i]
         monetary_cost = \
             self.problem_input.gas_liter_price \
             * (self.problem_input.ambulance.drive_gas_consumption_liter_per_meter +
@@ -322,7 +325,8 @@ class MDAProblem(GraphProblem):
 
         return MDACost(distance_cost=distance_cost,
                        monetary_cost=monetary_cost,
-                       test_travel_cost=test_travel_cost)
+                       tests_travel_distance_cost=test_travel_cost,
+                       optimization_objective=self.optimization_objective)
 
     def is_goal(self, state: GraphProblemState) -> bool:
         """
@@ -338,7 +342,7 @@ class MDAProblem(GraphProblem):
             is_goal = False
         if not state.get_total_nr_tests_taken_and_stored_on_ambulance() == 0:
             is_goal = False
-        if not state.tests_transferred_to_lab == self.problem_input.reported_apartments:
+        if not state.tests_transferred_to_lab == set(self.problem_input.reported_apartments):
             is_goal = False
 
         return is_goal
