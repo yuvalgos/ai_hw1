@@ -206,7 +206,10 @@ def mda_problem_with_astar_experiments():
     # Ex.22
     # TODO: create an instance of `AStar` with the `MDAMaxAirDistHeuristic`,
     #       solve the `moderate_mda_problem_with_distance_cost` with it and print the results.
-    exit()  # TODO: remove!
+
+    a_star_max_air_dist = AStar(MDAMaxAirDistHeuristic)
+    res_a_star_max_air_dist = a_star_max_air_dist.solve_problem(moderate_mda_problem_with_distance_cost)
+    print(res_a_star_max_air_dist)
 
     # Ex.25
     # TODO: create an instance of `AStar` with the `MDASumAirDistHeuristic`,

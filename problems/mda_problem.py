@@ -215,40 +215,38 @@ class MDAProblem(GraphProblem):
         """
         assert isinstance(state_to_expand, MDAState)
 
+        # check which apartments can visit:
+        apartments = self.get_reported_apartments_waiting_to_visit(state_to_expand)
+
+        # yield all lab operators:
+        for apart in apartments:
+            if apart.nr_roommates <= state_to_expand.nr_matoshim_on_ambulance \
+                    and apart.nr_roommates <= (self.problem_input.ambulance.total_fridges_capacity -
+                                           state_to_expand.get_total_nr_tests_taken_and_stored_on_ambulance()):
+                next_state_matoshim = state_to_expand.nr_matoshim_on_ambulance - apart.nr_roommates
+                next_state_tests_transferred = state_to_expand.tests_transferred_to_lab
+                next_state_visited_labs = state_to_expand.visited_labs
+                next_state_tests_on_ambulance = set(state_to_expand.tests_on_ambulance)
+                next_state_tests_on_ambulance.add(apart)
+
+                apart_state = MDAState(current_site=apart,
+                                       tests_on_ambulance=frozenset(next_state_tests_on_ambulance),
+                                       tests_transferred_to_lab=frozenset(next_state_tests_transferred),
+                                       nr_matoshim_on_ambulance=next_state_matoshim,
+                                       visited_labs=frozenset(next_state_visited_labs)
+                                       )
+                # print(apart_state)
+                name = "visit " + apart.reporter_name
+                cost = self.get_operator_cost(state_to_expand, apart_state)
+                yield OperatorResult(apart_state, cost, name)
+
+
         labs = set()
         # check which labs can visit:
         if state_to_expand.get_total_nr_tests_taken_and_stored_on_ambulance() is not 0:
             labs = set(self.problem_input.laboratories)
         else:
             labs = (set(self.problem_input.laboratories) - state_to_expand.visited_labs)
-
-        # check which apartments can visit:
-        apartments = self.get_reported_apartments_waiting_to_visit(state_to_expand)
-        for a in apartments:
-            if a.nr_roommates > state_to_expand.nr_matoshim_on_ambulance:
-                apartments.remove(a)
-            if a.nr_roommates > self.problem_input.ambulance.total_fridges_capacity \
-                    - state_to_expand.get_total_nr_tests_taken_and_stored_on_ambulance():
-                apartments.remove(a)
-        apartments = set(apartments)
-
-        # yield all lab operators:
-        for apart in apartments:
-            next_state_matoshim = state_to_expand.nr_matoshim_on_ambulance - apart.nr_roommates
-            next_state_tests_transferred = state_to_expand.tests_transferred_to_lab
-            next_state_visited_labs = state_to_expand.visited_labs
-            next_state_tests_on_ambulance = set(state_to_expand.tests_on_ambulance)
-            next_state_tests_on_ambulance.add(apart)
-
-            apart_state = MDAState(current_site=apart,
-                                   tests_on_ambulance=frozenset(next_state_tests_on_ambulance),
-                                   tests_transferred_to_lab=frozenset(next_state_tests_transferred),
-                                   nr_matoshim_on_ambulance=next_state_matoshim,
-                                   visited_labs=frozenset(next_state_visited_labs)
-                                   )
-            name = "visit " + apart.reporter_name
-            cost = self.get_operator_cost(state_to_expand, apart_state)
-            yield OperatorResult(apart_state, cost, name)
 
         # yield all lab operators:
         for lab in labs:
@@ -307,7 +305,7 @@ class MDAProblem(GraphProblem):
                                    self.problem_input.ambulance.fridge_capacity)
         fridges_gas_consumption = 0
         if active_fridges > 0:
-            for i in range(0, active_fridges + 1):
+            for i in range(0, active_fridges):
                 fridges_gas_consumption += self.problem_input.ambulance.fridges_gas_consumption_liter_per_meter[i]
         monetary_cost = \
             self.problem_input.gas_liter_price \
@@ -389,4 +387,10 @@ class MDAProblem(GraphProblem):
             Use the method `self.get_reported_apartments_waiting_to_visit(state)`.
             Use python's `sorted(some_list, key=...)` function.
         """
-        raise NotImplementedError  # TODO: remove this line!
+
+        junctions_list = []
+        for a in self.get_reported_apartments_waiting_to_visit(state):
+            junctions_list.append(a.location)
+        junctions_list.append(state.current_location)
+
+        return sorted(junctions_list, key=lambda x: x.index)
