@@ -71,6 +71,7 @@ def plot_distance_and_expanded_wrt_weight_figure(
 
     fig.tight_layout()
     plt.title(f'Quality vs. time for wA* \non problem {problem_name}')
+    plt.tight_layout()
     plt.show()
 
 
@@ -214,13 +215,16 @@ def mda_problem_with_astar_experiments():
     # Ex.25
     # TODO: create an instance of `AStar` with the `MDASumAirDistHeuristic`,
     #       solve the `moderate_mda_problem_with_distance_cost` with it and print the results.
-    exit()  # TODO: remove!
+    a_star_sum_air_dist = AStar(MDASumAirDistHeuristic)
+    res_a_star_sum_air_dist = a_star_sum_air_dist.solve_problem(moderate_mda_problem_with_distance_cost)
+    print(res_a_star_sum_air_dist)
 
     # Ex.28
     # TODO: create an instance of `AStar` with the `MDAMSTAirDistHeuristic`,
     #       solve the `moderate_mda_problem_with_distance_cost` with it and print the results.
-    exit()  # TODO: remove!
-
+    a_star_mst_air_dist = AStar(MDAMSTAirDistHeuristic)
+    res_a_star_mst_air_dist = a_star_mst_air_dist.solve_problem(moderate_mda_problem_with_distance_cost)
+    print(res_a_star_mst_air_dist)
 
 def mda_problem_with_weighted_astar_experiments():
     print()
@@ -233,13 +237,13 @@ def mda_problem_with_weighted_astar_experiments():
     # TODO: Call here the function `run_astar_for_weights_in_range()`
     #       with `MDAMSTAirDistHeuristic`
     #       over the `small_mda_problem_with_distance_cost`.
-    exit()  # TODO: remove!
+    run_astar_for_weights_in_range(MDAMSTAirDistHeuristic, small_mda_problem_with_distance_cost)
 
     # Ex.30
     # TODO: Call here the function `run_astar_for_weights_in_range()`
     #       with `MDASumAirDistHeuristic`
     #       over the `moderate_mda_problem_with_distance_cost`.
-    exit()  # TODO: remove!
+    run_astar_for_weights_in_range(MDASumAirDistHeuristic, moderate_mda_problem_with_distance_cost)
 
 
 def monetary_cost_objectives_mda_problem_experiments():
@@ -334,9 +338,9 @@ def mda_problem_anytime_astar_experiments():
 
 def run_all_experiments():
     print('Running all experiments')
-    toy_map_problem_experiments()
-    basic_mda_problem_experiments()
-    mda_problem_with_astar_experiments()
+    # toy_map_problem_experiments()
+    # basic_mda_problem_experiments()
+    # mda_problem_with_astar_experiments()
     mda_problem_with_weighted_astar_experiments()
     monetary_cost_objectives_mda_problem_experiments()
     multiple_objectives_mda_problem_experiments()

@@ -5,7 +5,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/problems/mda_heuristics.py" beforeDir="false" afterPath="$PROJECT_DIR$/problems/mda_heuristics.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/problems/mda_problem.py" beforeDir="false" afterPath="$PROJECT_DIR$/problems/mda_problem.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +57,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
@@ -73,10 +74,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="162" key="SettingsEditor/1920.723.1366.728/0.0.1920.1040@0.0.1920.1040" timestamp="1605806800899" />
-    <state x="184" y="338" key="com.intellij.ide.util.TipDialog" timestamp="1606237085032">
+    <state x="184" y="338" key="com.intellij.ide.util.TipDialog" timestamp="1606402692345">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="184" y="338" key="com.intellij.ide.util.TipDialog/1920.723.1366.728/0.0.1920.1040@0.0.1920.1040" timestamp="1606237085032" />
+    <state x="184" y="338" key="com.intellij.ide.util.TipDialog/1920.723.1366.728/0.0.1920.1040@0.0.1920.1040" timestamp="1606402692345" />
     <state x="56" y="373" width="804" height="526" key="find.popup" timestamp="1606063714659">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
