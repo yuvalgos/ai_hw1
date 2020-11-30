@@ -35,10 +35,6 @@ class MDAMaxAirDistHeuristic(HeuristicFunction):
             Use python's built-in `max()` function. Note that `max()` can receive an *ITERATOR*
                 and return the item with the maximum value within this iterator.
             That is, you can simply write something like this:
-        >>> max(<some expression using item1 & item2>
-        >>>     for item1 in some_items_collection
-        >>>     for item2 in some_items_collection
-        >>>     if <some condition over item1 & item2>)
         """
         assert isinstance(self.problem, MDAProblem)
         assert isinstance(state, MDAState)
@@ -171,7 +167,6 @@ class MDAMSTAirDistHeuristic(HeuristicFunction):
         G.add_edges_from(edges)
         mst = nx.minimum_spanning_tree(G)
         return mst.size(weight="weight")
-
 
 
 class MDATestsTravelDistToNearestLabHeuristic(HeuristicFunction):

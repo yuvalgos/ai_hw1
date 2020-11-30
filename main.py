@@ -277,9 +277,9 @@ def multiple_objectives_mda_problem_experiments():
     # Ex.35
     # TODO: create an instance of `AStar` with the `MDATestsTravelDistToNearestLabHeuristic`,
     #       solve the `moderate_mda_problem_with_tests_travel_dist_cost` with it and print the results.
-    # a_star_test_travel_dist = AStar(MDATestsTravelDistToNearestLabHeuristic)
-    # res_a_star_test_travel_dist = a_star_test_travel_dist.solve_problem(moderate_mda_problem_with_tests_travel_dist_cost)
-    # print(res_a_star_test_travel_dist)
+    a_star_test_travel_dist = AStar(MDATestsTravelDistToNearestLabHeuristic)
+    res_a_star_test_travel_dist = a_star_test_travel_dist.solve_problem(moderate_mda_problem_with_tests_travel_dist_cost)
+    print(res_a_star_test_travel_dist)
 
     # Ex.38
     # TODO: Implement the algorithm A_2 described in this exercise in the assignment instructions.
@@ -303,7 +303,6 @@ def multiple_objectives_mda_problem_experiments():
     epsilon = 0.6
     optimal_distance_cost = res_moderate_with_distance_cost.solution_g_cost
     max_distance_cost = (1 + epsilon) * optimal_distance_cost
-
 
     a_star_test_travel = AStar(MDATestsTravelDistToNearestLabHeuristic,
                                open_criterion=lambda n: n.cost.distance_cost <= max_distance_cost)
@@ -340,8 +339,9 @@ def mda_problem_with_astar_epsilon_experiments():
                                   within_focal_priority_function=within_focal_h_sum_priority_function,
                                   focal_epsilon=0.23,
                                   max_focal_size=40)
-    res = a_star_epsilon.solve_problem(small_mda_problem_with_distance_cost)
-    print(res)
+    res_with_focal = a_star_epsilon.solve_problem(small_mda_problem_with_distance_cost)
+    print(res_with_focal)
+
 
 def mda_problem_anytime_astar_experiments():
     print()
@@ -359,15 +359,16 @@ def mda_problem_anytime_astar_experiments():
     res = anytime_astar.solve_problem(moderate_mda_problem_with_distance_cost)
     print(res)
 
+
 def run_all_experiments():
     print('Running all experiments')
-    # toy_map_problem_experiments()
-    # basic_mda_problem_experiments()
-    # mda_problem_with_astar_experiments()
-    # mda_problem_with_weighted_astar_experiments()
-    # monetary_cost_objectives_mda_problem_experiments()
-    # multiple_objectives_mda_problem_experiments()
-    # mda_problem_with_astar_epsilon_experiments()
+    toy_map_problem_experiments()
+    basic_mda_problem_experiments()
+    mda_problem_with_astar_experiments()
+    mda_problem_with_weighted_astar_experiments()
+    monetary_cost_objectives_mda_problem_experiments()
+    multiple_objectives_mda_problem_experiments()
+    mda_problem_with_astar_epsilon_experiments()
     mda_problem_anytime_astar_experiments()
 
 

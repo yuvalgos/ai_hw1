@@ -73,12 +73,16 @@ class AStarEpsilon(AStar):
         """
         if self.open.is_empty():
             return None
-        min_g_cost = self.open.peek_next_node().g_cost
+        min_g_cost = self.open.peek_next_node().expanding_priority
         focal_max = (1 + self.focal_epsilon) * min_g_cost
+
+        # print()
+        # print("min g cost node :")
+        # print(self.open.peek_next_node())
 
         focal = []
         while (not self.open.is_empty()) and \
-                self.open.peek_next_node().g_cost <= focal_max and \
+                self.open.peek_next_node().expanding_priority <= focal_max and \
                 len(focal) < self.max_focal_size:
             focal.append(self.open.pop_next_node())
 
@@ -88,7 +92,13 @@ class AStarEpsilon(AStar):
             priorities_arr[i] = self.within_focal_priority_function(focal[i], problem, self)
 
         min_index = priorities_arr.argmin()
-        min_node = focal.pop(min_index)
+        min_node = focal[min_index]
+        focal.pop(min_index)
+
+        # print("min node from focal:")
+        # print(min_node)
+        if self.use_close:
+            self.close.add_node(min_node)
 
         for f in focal:
             self.open.push_node(f)
